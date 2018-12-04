@@ -6,7 +6,11 @@ public class Main {
 		InbyggdaMetoder sc= new InbyggdaMetoder();
 		
 		
-		System.out.println(sc.Double(12, 15));
+		System.out.println(sc.KlotVolym(10));
+		sc.sjorovare("hejsan");
+		System.out.println(sc.reverse("hejsan"));
+		System.out.println(sc.count("hejsan", 'e'));
+		
 	}
-
+	
 }
