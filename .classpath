@@ -7,5 +7,7 @@
 	<classpathentry kind="src" path="ArrayLaxa"/>
 	<classpathentry kind="src" path="BubbleSort"/>
 	<classpathentry kind="src" path="v2(swistch)"/>
+	<classpathentry kind="src" path="v5"/>
+	<classpathentry kind="src" path="gissaTal"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
