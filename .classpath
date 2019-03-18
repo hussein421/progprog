@@ -9,5 +9,7 @@
 	<classpathentry kind="src" path="v2(swistch)"/>
 	<classpathentry kind="src" path="v5"/>
 	<classpathentry kind="src" path="gissaTal"/>
+	<classpathentry kind="src" path="v10"/>
+	<classpathentry kind="src" path="SecureDoors"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
