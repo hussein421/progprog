@@ -38,31 +38,54 @@ public class hangmann2 {
 		
 		String sjalva_ordet_hard = hard.get((int)(Math.random()*4)); // själva ordet personen skall gissa på slumpas fram
 		
+		int person = personer(input);// anropar metoden där perosnen kan välja om han ska köra singel eller multiplayer
 		
-		int choice = meny(input);
-	
-		switch(choice) {
+		switch(person) {
 		case 1:
-			
-			easy(sjalva_ordet_easy, input);// anropar metoden
+		
+			multiplayer(input);
 			break;
 		case 2:
+			int choice = meny(input);// anropar switch case 
 			
-			medel(sjalva_ordet_medel, input);// anropar metoden
-			break;
-		case 3:
-			
-			hard(sjalva_ordet_hard, input);// anropar metoden
+			switch(choice) {
+			case 1:
+				
+				easy(sjalva_ordet_easy, input);// anropar metoden
+				break;
+			case 2:
+				
+				medel(sjalva_ordet_medel, input);// anropar metoden
+				break;
+			case 3:
+				
+				hard(sjalva_ordet_hard, input);// anropar metoden
+				break;
+			}
 			break;
 		}
 		
 		
 		
+		
+		
+		
 	}
-	
-	static public int meny(Scanner input) {
+	static public int personer(Scanner input) {
 		
 		System.out.println("Hej och välkomen till mitt hänga gubbe spel! ");
+		System.out.println("Vill du spela Single player eller multiplayer?");
+		System.out.println("(1) - multiplayer");
+		System.out.println("(2) - single player");
+		
+		int person = input.nextInt();
+		
+		return person;
+	}
+	
+	static public int meny(Scanner input) {// switch case för svårhetsgrad
+		
+	
 		System.out.println("Vilken svårhetsgrad vill du spela på?");
 		System.out.println("(1) - lätt?");
 		System.out.println("(2) - medel?");
@@ -74,21 +97,29 @@ public class hangmann2 {
 		
 	}
 	
-	static public void easy(String sjalva_ordet_easy, Scanner input) {// hela själva metoden 
-		char[] gissa_ordet_easy = new char [sjalva_ordet_easy.length()];
+	static public void multiplayer(Scanner input) {
+		System.out.println("skriv ner ordet du vill att din partner skall gissa på!");
+		String buffert2 =input.nextLine();
+		String sjalva_ordet = input.nextLine();
+		int antal_forsok = 0;		
+		
+		
+		char[] gissa_ordet = new char [sjalva_ordet.length()];
 		int i=0;
-		int liv = 15;
-		while(i<sjalva_ordet_easy.length()) { // omvandlar ordet till ---
-			gissa_ordet_easy[i]='-';
-			if(sjalva_ordet_easy.charAt(i) == (' ')) {
-				gissa_ordet_easy[i]=' ';
+		while(i<sjalva_ordet.length()) { // omvandlar ordet till ---
+			gissa_ordet[i]='-';
+			if(sjalva_ordet.charAt(i) == (' ')) {
+				gissa_ordet[i]=' ';
 			}
 			i++;
 		}
-			
-				System.out.println("du har så här många liv: " + liv);
-				System.out.print("Det här är ordet du ska gissa på:    ");
-				System.out.println(gissa_ordet_easy);
+		System.out.println("Skriv antal försök du vill att din partner ska ha!");
+		int liv = input.nextInt();
+		
+		System.out.println("Din partner valde att du har " + liv + " liv");
+		System.out.print("Det här är ordet du ska gissa på:    ");
+		System.out.println(gissa_ordet);
+		
 		
 		
 		
@@ -108,19 +139,21 @@ public class hangmann2 {
 			
 			log.add(bokstaver);
 			
-			if(sjalva_ordet_easy.contains(bokstaver+"")) { // kollar om personer gissar rätt och byter - med bokstaven
-				for (int x = 0; x < gissa_ordet_easy.length; x++) {
-					if(sjalva_ordet_easy.charAt(x) == (bokstaver)) {
-						gissa_ordet_easy[x]=bokstaver;
+			if(sjalva_ordet.contains(bokstaver+"")) { // kollar om personer gissar rätt och byter - med bokstaven
+				antal_forsok++;
+				for (int x = 0; x < gissa_ordet.length; x++) {
+					if(sjalva_ordet.charAt(x) == (bokstaver)) {
+						gissa_ordet[x]=bokstaver;
 					}
 				}
 			}
 			else {
+				antal_forsok++;
 				liv--;
 			}
-	if(sjalva_ordet_easy.equals(String.valueOf(gissa_ordet_easy))) { //ifall persone gissar rätt på hela ordet
-				System.out.println(sjalva_ordet_easy);
-				System.out.println("Du klara det!!");
+	if(sjalva_ordet.equals(String.valueOf(gissa_ordet))) { //ifall persone gissar rätt på hela ordet
+				System.out.println(sjalva_ordet);
+				System.out.println("Du klara det!! Det tog dig " + antal_forsok +" försök!");
 				System.out.println("vill du spela igen?");
 				
 				System.out.println("(1) - ja ");
@@ -141,12 +174,112 @@ public class hangmann2 {
 	}
 			
 			
-			System.out.print(gissa_ordet_easy);
-			System.out.println("          liv kvar:"+liv);
-			System.out.println("Du har gissat på:" + Arrays.asList(log));
+			System.out.print(gissa_ordet);
+			System.out.println("          Du har " +liv+ " liv kvar");
+			System.out.println("Du har gissat på:" + Arrays.asList(log));// visar vad du har redan gissat på 
 			
 		}
-		if(liv == 0) {
+		if(liv == 0) { // om du förlorar
+			System.out.println("Du förlora och ordet var: " + sjalva_ordet);
+			
+			System.out.println("vill du spela igen?");
+			
+			System.out.println("(1) - ja ");
+			
+			System.out.println("(2) - nej ");
+			
+			String buffert = input.nextLine(); // den hoppar över denna för nån anledning
+			
+			String svar= input.nextLine();
+			
+			if(svar.equals("1")) { // om man vill spela igen
+				liv=15;
+			}
+			else { // om inte
+				System.out.println("okej hejdå");
+				
+			}
+		}
+	}
+		
+		
+	
+	static public void easy(String sjalva_ordet_easy, Scanner input) {// hela själva metoden 
+		char[] gissa_ordet = new char [sjalva_ordet_easy.length()];
+		int i=0;
+		int antal_forsok=0;
+		int liv = 15;
+		while(i<sjalva_ordet_easy.length()) { // omvandlar ordet till ---
+			gissa_ordet[i]='-';
+			if(sjalva_ordet_easy.charAt(i) == (' ')) {
+				gissa_ordet[i]=' ';
+			}
+			i++;
+		}
+			
+				System.out.println("du har " + liv +" kvar");
+				System.out.print("Det här är ordet du ska gissa på:    ");
+				System.out.println(gissa_ordet);
+		
+		
+		
+
+		ArrayList<Character> log= new ArrayList<>(); // charactarerna personen gissar på sparas här
+
+		
+		while(liv>0) {
+			char bokstaver = input.next().charAt(0); // personen gissar bokstäver
+			
+			 if(log.contains(bokstaver)) { // om man gissar på samma sak mer än en gång
+					
+					System.out.println("bokstaven har du redan gissat på, gissa på en annan bokstav!");
+					
+					continue; // while loopen forsätter
+					}
+			
+			log.add(bokstaver);
+			
+			if(sjalva_ordet_easy.contains(bokstaver+"")) { // kollar om personer gissar rätt och byter - med bokstaven
+				antal_forsok++;
+				for (int x = 0; x < gissa_ordet.length; x++) {
+					if(sjalva_ordet_easy.charAt(x) == (bokstaver)) {
+						gissa_ordet[x]=bokstaver;
+					}
+				}
+			}
+			else {
+				antal_forsok++;
+				liv--;
+			}
+	if(sjalva_ordet_easy.equals(String.valueOf(gissa_ordet))) { //ifall persone gissar rätt på hela ordet
+				System.out.println(sjalva_ordet_easy);
+				System.out.println("Du klara det!! Det tog dig " + antal_forsok +" försök!");
+				System.out.println("vill du spela igen?");
+				
+				System.out.println("(1) - ja ");
+				
+				System.out.println("(2) - nej ");
+				
+				String buffert = input.nextLine();// den hoppar över denna för nån anledning
+				
+				String svar= input.nextLine();
+				
+				if(svar.equals("1")) {
+					liv=15;
+				}
+				else {
+					System.out.println("okej hejdå");
+				}
+				
+	}
+			
+			
+			System.out.print(gissa_ordet);
+			System.out.println("          Du har " +liv+ " liv kvar");
+			System.out.println("Du har gissat på:" + Arrays.asList(log));// visar vad du har redan gissat på 
+			
+		}
+		if(liv == 0) { // om du förlorar
 			System.out.println("Du förlora och ordet var: " + sjalva_ordet_easy);
 			
 			System.out.println("vill du spela igen?");
@@ -159,10 +292,10 @@ public class hangmann2 {
 			
 			String svar= input.nextLine();
 			
-			if(svar.equals("1")) {
+			if(svar.equals("1")) { // om man vill spela igen
 				liv=15;
 			}
-			else {
+			else { // om inte
 				System.out.println("okej hejdå");
 				
 			}
@@ -171,20 +304,21 @@ public class hangmann2 {
 	
 	
 	static public void hard(String sjalva_ordet_hard, Scanner input) {// hela själva metoden 
-		char[] gissa_ordet_hard = new char [sjalva_ordet_hard.length()];
-		int liv_hard =5;
-		int q=0;
-		while(q<sjalva_ordet_hard.length()) { // omvandlar ordet till ---
-			gissa_ordet_hard[q]='-';
-			if(sjalva_ordet_hard.charAt(q) == (' ')) {
-				gissa_ordet_hard[q]=' ';
+		char[] gissa_ordet = new char [sjalva_ordet_hard.length()];
+		int liv =5;
+		int antal_forsok =0;
+		int i=0;
+		while(i<sjalva_ordet_hard.length()) { // omvandlar ordet till ---
+			gissa_ordet[i]='-';
+			if(sjalva_ordet_hard.charAt(i) == (' ')) {
+				gissa_ordet[i]=' ';
 			}
-			q++;
+			i++;
 		}
 			
-				System.out.println("du har så här många liv: " + liv_hard);
+				System.out.println("du har " + liv +" kvar");
 				System.out.print("Det här är ordet du ska gissa på:    ");
-				System.out.println(gissa_ordet_hard);
+				System.out.println(gissa_ordet);
 		
 		
 		
@@ -192,7 +326,7 @@ public class hangmann2 {
 		ArrayList<Character> log= new ArrayList<>(); // charactarerna personen gissar på sparas här
 
 		
-		while(liv_hard>0) {
+		while(liv>0) {
 			char bokstaver = input.next().charAt(0); // personen gissar bokstäver
 			
 			 if(log.contains(bokstaver)) { // om man gissar på samma sak mer än en gång
@@ -205,18 +339,20 @@ public class hangmann2 {
 			log.add(bokstaver);
 			
 			if(sjalva_ordet_hard.contains(bokstaver+"")) { // kollar om personer gissar rätt och byter - med bokstaven
-				for (int x = 0; x < gissa_ordet_hard.length; x++) {
+				antal_forsok++;
+				for (int x = 0; x < gissa_ordet.length; x++) {
 					if(sjalva_ordet_hard.charAt(x) == (bokstaver)) {
-						gissa_ordet_hard[x]=bokstaver;
+						gissa_ordet[x]=bokstaver;
 					}
 				}
 			}
 			else {
-				liv_hard--;
+				antal_forsok++;
+				liv--;
 			}
-	if(sjalva_ordet_hard.equals(String.valueOf(gissa_ordet_hard))) { //ifall persone gissar rätt på hela ordet
+	if(sjalva_ordet_hard.equals(String.valueOf(gissa_ordet))) { //ifall persone gissar rätt på hela ordet
 				System.out.println(sjalva_ordet_hard);
-				System.out.println("Du klara det!!");
+				System.out.println("Du klara det!! Det tog dig " + antal_forsok +" försök!");
 				System.out.println("vill du spela igen?");
 				
 				System.out.println("(1) - ja ");
@@ -227,21 +363,21 @@ public class hangmann2 {
 				
 				String svar= input.nextLine();
 				
-				if(svar.equals("1")) {
-					liv_hard=5;
+				if(svar.equals("1")) { // om man vill spela igen
+					liv=5;
 				}
-				else {
+				else { // om inte
 					System.out.println("okej hejdå");
 				}
 				
 	}
 			
 			
-			System.out.print(gissa_ordet_hard);
-			System.out.println("          liv kvar:"+liv_hard);
-			System.out.println("Du har gissat på:" + Arrays.asList(log));
+			System.out.print(gissa_ordet);
+			System.out.println("          Du har " +liv+ " liv kvar");
+			System.out.println("Du har gissat på:" + Arrays.asList(log)); // visar vad du har gissat på
 		}
-		if(liv_hard == 0) {
+		if(liv == 0) {
 			System.out.println("Du förlora och ordet var: " + sjalva_ordet_hard);
 			
 			System.out.println("vill du spela igen?");
@@ -254,27 +390,28 @@ public class hangmann2 {
 			
 			String svar= input.nextLine();
 			
-			if(svar.equals("1")) {
-				liv_hard=5;
+			if(svar.equals("1")) { // om man vill spela igen
+				liv=5;
 			}
-			else {
+			else { // om inte
 				System.out.println("okej hejdå");
 			}
 		}
 	}
 	static public void medel(String sjalva_ordet_medel, Scanner input) {// hela själva metoden 
 		char[] gissa_ordet = new char [sjalva_ordet_medel.length()];
-		int w=0;
-		int liv_medel = 10;
-		while(w<sjalva_ordet_medel.length()) { // omvandlar ordet till ---
-			gissa_ordet[w]='-';
-			if(sjalva_ordet_medel.charAt(w) == (' ')) {
-				gissa_ordet[w]=' ';
+		int i=0;
+		int antal_forsok =0;
+		int liv = 10;
+		while(i<sjalva_ordet_medel.length()) { // omvandlar ordet till ---
+			gissa_ordet[i]='-';
+			if(sjalva_ordet_medel.charAt(i) == (' ')) {
+				gissa_ordet[i]=' ';
 			}
-			w++;
+			i++;
 		}
 			
-				System.out.println("du har så här många liv: " + liv_medel);
+				System.out.println("du har " + liv +" kvar");
 				System.out.print("Det här är ordet du ska gissa på:    ");
 				System.out.println(gissa_ordet);
 		
@@ -284,7 +421,7 @@ public class hangmann2 {
 		ArrayList<Character> log= new ArrayList<>(); // charactarerna personen gissar på sparas här
 
 		
-		while(liv_medel>0) {
+		while(liv>0) {
 			char bokstaver = input.next().charAt(0); // personen gissar bokstäver
 			
 			 if(log.contains(bokstaver)) { // om man gissar på samma sak mer än en gång
@@ -297,6 +434,7 @@ public class hangmann2 {
 			log.add(bokstaver);
 			
 			if(sjalva_ordet_medel.contains(bokstaver+"")) { // kollar om personer gissar rätt och byter - med bokstaven
+			antal_forsok++;
 				for (int x = 0; x < gissa_ordet.length; x++) {
 					if(sjalva_ordet_medel.charAt(x) == (bokstaver)) {
 						gissa_ordet[x]=bokstaver;
@@ -304,11 +442,12 @@ public class hangmann2 {
 				}
 			}
 			else {
-				liv_medel--;
+				antal_forsok++;
+				liv--;
 			}
 	if(sjalva_ordet_medel.equals(String.valueOf(gissa_ordet))) { //ifall persone gissar rätt på hela ordet
 				System.out.println(sjalva_ordet_medel);
-				System.out.println("Du klara det!!");
+				System.out.println("Du klara det!! Det tog dig " + antal_forsok +" försök!");
 				System.out.println("vill du spela igen?");
 				
 				System.out.println("(1) - ja ");
@@ -319,10 +458,10 @@ public class hangmann2 {
 				
 				String svar= input.nextLine();
 				
-				if(svar.equals("1")) {
-					liv_medel=10;
+				if(svar.equals("1")) { // om man vill spela igen
+					liv=10;
 				}
-				else {
+				else { // om inte
 					System.out.println("okej hejdå");
 				}
 				
@@ -330,10 +469,10 @@ public class hangmann2 {
 			
 			
 			System.out.print(gissa_ordet);
-			System.out.println("          liv kvar:"+liv_medel);
-			System.out.println("Du har gissat på:" + Arrays.asList(log));
+			System.out.println("          Du har " +liv+ " liv kvar");
+			System.out.println("Du har gissat på:" + Arrays.asList(log)); // visar vad du har gissat på 
 		}
-		if(liv_medel == 0) {
+		if(liv == 0) {
 			System.out.println("Du förlora och ordet var: " + sjalva_ordet_medel);
 			
 			System.out.println("vill du spela igen?");
@@ -346,10 +485,11 @@ public class hangmann2 {
 			
 			String svar= input.nextLine();
 			
-			if(svar.equals("1")) {
-				liv_medel =10;
+			if(svar.equals("1")) { // om personen vill spela igen
+				liv =10;
+				
 			}
-			else {
+			else { // om inte
 				System.out.println("okej hejdå");
 			}
 		}
