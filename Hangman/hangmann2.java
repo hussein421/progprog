@@ -1,5 +1,6 @@
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.InputMismatchException;
 import java.util.Scanner;
 
 import com.sun.xml.internal.fastinfoset.algorithm.BuiltInEncodingAlgorithm.WordListener;
@@ -78,29 +79,61 @@ public class hangmann2 {
 	}
 	static public int personer(Scanner input) {
 		
-		System.out.println("Hej och välkomen till mitt hänga gubbe spel! ");
-		System.out.println("Vill du spela Single player eller multiplayer?");
-		System.out.println("(1) - multiplayer");
-		System.out.println("(2) - single player");
+	int person = 0;
+	boolean kolla = true;// startar om den ifall personen inte väljer 1 eller 2
+	while(kolla) {
 		
-		int person = input.nextInt();
+		try {
+			System.out.println("Hej och välkomen till mitt hänga gubbe spel! ");
+			System.out.println("Vill du spela Single player eller multiplayer?");
+			System.out.println("(1) - multiplayer");
+			System.out.println("(2) - single player");
+			 person = input.nextInt();
+			 
+
+			 kolla=false; 
+		}
+		catch (InputMismatchException e){
+
+			String a = input.next();// buffert
+			System.out.println("Kom igen, bete dig");
+			kolla=true;
+		}
 		
-		return person;
+		break;
+	}	
+	return person;
 	}
 	
+
+
 	static public int meny(Scanner input) {// switch case för svårhetsgrad
-		
-	
+		int choice = 0;
+		boolean kolla = true;
+	while(kolla){
+	try {
 		System.out.println("Vilken svårhetsgrad vill du spela på?");
 		System.out.println("(1) - lätt?");
 		System.out.println("(2) - medel?");
 		System.out.println("(3) - svårt?");
 		
-		int choice = input.nextInt();
-		
-		return choice;
-		
+		choice = input.nextInt();
+		kolla=false;
 	}
+	catch (InputMismatchException e){
+
+		String a = input.next();//buffert
+		System.out.println("Kom igen, bete dig!!");
+		kolla=true;
+	}
+	
+	break;
+	}
+	return choice;
+}	
+		
+		
+	
 	
 	static public void multiplayer(Scanner input, boolean spelet) {
 		System.out.println("skriv ner ordet du vill att din partner skall gissa på!");
@@ -131,8 +164,20 @@ public class hangmann2 {
 			}
 			i++;
 		}
-		System.out.println("Skriv antal försök du vill att din partner ska ha!");
-		int liv = input.nextInt();
+		boolean kolla=true;
+		int liv=0;
+		while(kolla) {
+		try{
+			System.out.println("Skriv antal försök du vill att din partner ska ha!");
+		
+		liv = input.nextInt();
+		kolla=false;
+		}catch(InputMismatchException e){
+			String a = input.next();
+			System.out.println("Kom igen, bete dig!!");
+			kolla=true;
+		}
+		}
 		
 		System.out.println("Din partner valde att du har " + liv + " liv");
 		System.out.print("Det här är ordet du ska gissa på:    ");
@@ -146,10 +191,10 @@ public class hangmann2 {
 boolean won = false; 
 		
 		while(liv>0 && !won) {
-			String bokstaver = input.next(); // personen gissar bokstäver
+			String bokstaver = input.next(); // personen gissar 
 			
 			if(bokstaver.length()==1) {
-				char bokstav= bokstaver.charAt(0);
+				char bokstav= bokstaver.charAt(0);// om personen gissar på en bokstav så omvandlas den till en char
 			
 			
 			 if(log.contains(bokstav)) { // om man gissar på samma sak mer än en gång
@@ -200,6 +245,7 @@ boolean won = false;
 					}
 					else {
 						System.out.println("okej hejdå");
+						break;
 					}
 				}
 			}
@@ -224,6 +270,7 @@ boolean won = false;
 				}
 				else {
 					System.out.println("okej hejdå");
+					break;
 				}
 				
 	}
@@ -334,6 +381,7 @@ boolean won = false;
 					}
 					else {
 						System.out.println("okej hejdå");
+						break;
 					}
 				}
 			}
@@ -358,6 +406,7 @@ boolean won = false;
 				}
 				else {
 					System.out.println("okej hejdå");
+					break;
 				}
 				
 	}
@@ -415,9 +464,9 @@ boolean won = false;
 boolean won = false;
 		
 		while(liv>0 && !won) {
-			String bokstaver = input.next(); // personen gissar bokstäver
+			String bokstaver = input.next(); // personen gissar 
 			
-			if(bokstaver.length()==1) {
+			if(bokstaver.length()==1) { //ifall det är en bokstav då omvandlas den till en char 
 				char bokstav=bokstaver.charAt(0);
 			 if(log.contains(bokstav)) { // om man gissar på samma sak mer än en gång
 					
@@ -466,6 +515,7 @@ boolean won = false;
 					}
 					else {
 						System.out.println("okej hejdå");
+						break;
 					}
 				}
 			}
@@ -489,6 +539,7 @@ boolean won = false;
 				}
 				else { // om inte
 					System.out.println("okej hejdå");
+					break;
 				}
 				
 	}
@@ -515,13 +566,14 @@ boolean won = false;
 			}
 			else { // om inte
 				System.out.println("okej hejdå");
+				
 			}
 		}
 	}
 	static public void medel(String sjalva_ordet_medel, Scanner input,boolean spelet) {// hela själva metoden 
 		char[] gissa_ordet = new char [sjalva_ordet_medel.length()];
 		int i=0;
-		int antal_forsok =0;
+		int antal_forsok=0;
 		int liv = 10;
 		while(i<sjalva_ordet_medel.length()) { // omvandlar ordet till ---
 			gissa_ordet[i]='-';
@@ -539,12 +591,15 @@ boolean won = false;
 		
 
 		ArrayList<Character> log= new ArrayList<>(); // charactarerna personen gissar på sparas här
-boolean won= false;
+		boolean won= false;
 		
 		while(liv>0 && !won) {
-			String bokstaver = input.next(); // personen gissar bokstäver
+		
+		String bokstaver = input.next(); // personen gissar bokstäver
+		
 			
-			if(bokstaver.length()==1) {
+		
+		if(bokstaver.length()==1) {
 				char bokstav=bokstaver.charAt(0);
 			
 			
@@ -564,7 +619,7 @@ boolean won= false;
 						gissa_ordet[x]=bokstav;
 					}
 				}
-			}
+			} 
 			else {
 				antal_forsok++;
 				liv--;
@@ -594,6 +649,7 @@ boolean won= false;
 					}
 					else {
 						System.out.println("okej hejdå");
+						break;
 					}
 				}
 			}
@@ -616,6 +672,7 @@ boolean won= false;
 				}
 				else { // om inte
 					System.out.println("okej hejdå");
+					break;
 				}
 				
 	}
@@ -643,6 +700,7 @@ boolean won= false;
 			}
 			else { // om inte
 				System.out.println("okej hejdå");
+				
 			}
 		}
 	}
