@@ -7,11 +7,12 @@ import com.sun.xml.internal.fastinfoset.algorithm.BuiltInEncodingAlgorithm.WordL
 
 public class hangmann2 {
 
+	static boolean spelet;
 	
 	public static void main(String[] args) { // main metoden 
 		
 		Scanner input = new Scanner(System.in); // så att den kan läsa charachtarer		
-		boolean spelet=true; // så att jag kan starta om hela spelet
+		spelet=true; // så att jag kan starta om hela spelet
 		
 		while(spelet) {
 		
@@ -49,7 +50,7 @@ public class hangmann2 {
 		switch(person) {
 		case 1:
 		
-			multiplayer(input,spelet);
+			multiplayer(input);
 			break;
 		case 2:
 			int choice = meny(input);// anropar switch case 
@@ -57,15 +58,15 @@ public class hangmann2 {
 			switch(choice) {
 			case 1:
 				
-				easy(sjalva_ordet_easy, input,spelet);// anropar metoden
+				easy(sjalva_ordet_easy, input);// anropar metoden
 				break;
 			case 2:
 				
-				medel(sjalva_ordet_medel, input,spelet);// anropar metoden
+				medel(sjalva_ordet_medel, input);// anropar metoden
 				break;
 			case 3:
 				
-				hard(sjalva_ordet_hard, input,spelet);// anropar metoden
+				hard(sjalva_ordet_hard, input);// anropar metoden
 				break;
 			}
 			break;
@@ -135,7 +136,7 @@ public class hangmann2 {
 		
 	
 	
-	static public void multiplayer(Scanner input, boolean spelet) {
+	static public void multiplayer(Scanner input) {
 		System.out.println("skriv ner ordet du vill att din partner skall gissa på!");
 		String buffert2 =input.nextLine();
 		String sjalva_ordet = input.nextLine();
@@ -224,7 +225,7 @@ boolean won = false;
 			}
 			
 			else {
-				if(sjalva_ordet.equals(bokstaver)) {
+				if(sjalva_ordet.equals(bokstaver.toLowerCase())) {// om personen gissar rätt på hela ordet
 					antal_forsok++;
 					System.out.println(sjalva_ordet);
 					System.out.println("Du klara det!! Det tog dig " + antal_forsok +" försök!");
@@ -245,8 +246,13 @@ boolean won = false;
 					}
 					else {
 						System.out.println("okej hejdå");
+						spelet = false;
 						break;
 					}
+				}if(!sjalva_ordet.equals(bokstaver.toLowerCase())) {// om man gissar fel på hela ordet 
+					antal_forsok++;
+					System.out.println("fel, gissa igen!");
+					
 				}
 			}
 			
@@ -270,6 +276,7 @@ boolean won = false;
 				}
 				else {
 					System.out.println("okej hejdå");
+					spelet = false;
 					break;
 				}
 				
@@ -298,14 +305,14 @@ boolean won = false;
 			}
 			else { // om inte
 				System.out.println("okej hejdå");
-				
+				spelet = false;
 			}
 		}
 	}
 		
 		
 	
-	static public void easy(String sjalva_ordet_easy, Scanner input,boolean spelet) {// hela själva metoden 
+	static public void easy(String sjalva_ordet_easy, Scanner input) {// hela själva metoden 
 		char[] gissa_ordet = new char [sjalva_ordet_easy.length()];
 		int i=0;
 		int antal_forsok=0;
@@ -381,6 +388,7 @@ boolean won = false;
 					}
 					else {
 						System.out.println("okej hejdå");
+						spelet = false;
 						break;
 					}
 				}
@@ -406,6 +414,7 @@ boolean won = false;
 				}
 				else {
 					System.out.println("okej hejdå");
+					spelet = false;
 					break;
 				}
 				
@@ -434,13 +443,14 @@ boolean won = false;
 			}
 			else { // om inte
 				System.out.println("okej hejdå");
-				
+
+				spelet = false;
 			}
 		}
 	}
 	
 	
-	static public void hard(String sjalva_ordet_hard, Scanner input,boolean spelet) {// hela själva metoden 
+	static public void hard(String sjalva_ordet_hard, Scanner input) {// hela själva metoden 
 		char[] gissa_ordet = new char [sjalva_ordet_hard.length()];
 		int liv =5;
 		int antal_forsok =0;
@@ -515,6 +525,7 @@ boolean won = false;
 					}
 					else {
 						System.out.println("okej hejdå");
+						spelet = false;
 						break;
 					}
 				}
@@ -539,6 +550,7 @@ boolean won = false;
 				}
 				else { // om inte
 					System.out.println("okej hejdå");
+					spelet = false;
 					break;
 				}
 				
@@ -566,11 +578,12 @@ boolean won = false;
 			}
 			else { // om inte
 				System.out.println("okej hejdå");
+				spelet = false;
 				
 			}
 		}
 	}
-	static public void medel(String sjalva_ordet_medel, Scanner input,boolean spelet) {// hela själva metoden 
+	static public void medel(String sjalva_ordet_medel, Scanner input) {// hela själva metoden 
 		char[] gissa_ordet = new char [sjalva_ordet_medel.length()];
 		int i=0;
 		int antal_forsok=0;
@@ -649,6 +662,7 @@ boolean won = false;
 					}
 					else {
 						System.out.println("okej hejdå");
+						spelet = false;
 						break;
 					}
 				}
@@ -672,6 +686,7 @@ boolean won = false;
 				}
 				else { // om inte
 					System.out.println("okej hejdå");
+					spelet = false;
 					break;
 				}
 				
@@ -700,6 +715,7 @@ boolean won = false;
 			}
 			else { // om inte
 				System.out.println("okej hejdå");
+				spelet = false;
 				
 			}
 		}
