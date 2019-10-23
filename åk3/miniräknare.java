@@ -6,7 +6,10 @@ import javafx.geometry.Pos;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.ListView.EditEvent;
 import javafx.scene.control.TextField;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.paint.Color;
@@ -23,6 +26,7 @@ public class miniräknare extends Application implements EventHandler<ActionEvent
 	
 	
 	
+	
 	public static void main(String[] args) {
 	
 		launch(args);
@@ -33,6 +37,9 @@ public class miniräknare extends Application implements EventHandler<ActionEvent
 		
 		knappar();
 		knapparPlats();
+		
+		
+		
 		gridPane.setTranslateY(30);
 		gridPane.setTranslateX(-150);
 		likamed.setTranslateX(-130);
@@ -43,6 +50,12 @@ public class miniräknare extends Application implements EventHandler<ActionEvent
 		HBox box = new HBox(field,gridPane,likamed);
 		  
 		Scene scene = new Scene(box, 300, 300);
+        scene.setOnKeyReleased(new EventHandler<KeyEvent>() {
+            @Override
+            public void handle(KeyEvent event) {
+            	baraNummerIText(event);
+            }
+        });		
 		primaryStage.setScene(scene);
 		primaryStage.show();
 		
@@ -77,23 +90,15 @@ public class miniräknare extends Application implements EventHandler<ActionEvent
 			});
 			knapparna.add(tempButton);
 		}
+}
+	public void baraNummerIText(KeyEvent event){
+		String c = event.getCharacter();
+		if(!(Character.isDigit(c) || (c==KeyCode.BACK_SPACE) || )
 		
-		
-		
-		
-		
-		
-		
-		
-		
-	
-	
-	
-	}
+		}
 
 	@Override
 	public void handle(ActionEvent arg0) {
-		// TODO Auto-generated method stub
-		
+
 	}
 	}
