@@ -93,7 +93,9 @@ public class miniräknare extends Application implements EventHandler<ActionEvent
 }
 	public void baraNummerIText(KeyEvent event){
 		String c = event.getCharacter();
-		if(!(Character.isDigit(c) || (c==KeyCode.BACK_SPACE) || )
+		if(!(c.matches("[0-9]"))) {
+		event.consume();
+		}
 		
 		}
 
