@@ -50,6 +50,7 @@ public class miniräknare extends Application implements EventHandler<ActionEvent
 		HBox box = new HBox(field,gridPane,likamed);
 		  
 		Scene scene = new Scene(box, 300, 300);
+		//Key pressed funkar inte??
         scene.setOnKeyReleased(new EventHandler<KeyEvent>() {
             @Override
             public void handle(KeyEvent event) {
@@ -92,9 +93,10 @@ public class miniräknare extends Application implements EventHandler<ActionEvent
 		}
 }
 	public void baraNummerIText(KeyEvent event){
-		String c = event.getCharacter();
-		if(!(c.matches("[0-9]"))) {
-		event.consume();
+		char c = event.getCode().getName().charAt(0);
+		System.out.println(c);
+		if(!Character.isDigit(c)) {
+			event.consume();
 		}
 		
 		}
